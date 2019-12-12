@@ -85,7 +85,7 @@ class _PreviewPageState extends State<PreviewPage> {
                       ),
                       CircleAvatar(
                         child: CircleAvatar(
-                          backgroundColor: Colors.deepOrange.shade300,
+                          backgroundColor: Theme.of(context).backgroundColor,
                             backgroundImage: _editedContact.img != null ?
                             FileImage(File(_editedContact.img)) :
                             AssetImage("images/person.png"),
