@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:lista_de_contatos/helpers/contact_helper.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:lista_de_contatos/helpers/contact_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'contact_page.dart';
@@ -20,7 +18,6 @@ class _PreviewPageState extends State<PreviewPage> {
 
 
 
-  final _nameFocus = FocusNode();
   ContactHelper helper = ContactHelper();
 
   Contact _editedContact;
@@ -45,7 +42,6 @@ class _PreviewPageState extends State<PreviewPage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text("Contato"),
-          backgroundColor: Colors.red,
           elevation: 0,
           centerTitle: true,
         ),
@@ -54,7 +50,6 @@ class _PreviewPageState extends State<PreviewPage> {
             _editContact(contact: _editedContact);
           },
           child: Icon(Icons.edit),
-          backgroundColor: Colors.red,
         ),
         body: ListView(
           children: <Widget>[
@@ -66,8 +61,8 @@ class _PreviewPageState extends State<PreviewPage> {
                       end: Alignment.centerRight,
                       stops: [0.5, 0.9],
                       colors: [
-                        Colors.red,
-                        Colors.deepOrange.shade300
+                        Theme.of(context).accentColor,
+                        Theme.of(context).hintColor
                       ]
                   )
               ),
@@ -86,7 +81,7 @@ class _PreviewPageState extends State<PreviewPage> {
                           },
                         ),
                         minRadius: 30.0,
-                        backgroundColor: Colors.red.shade600,
+                        backgroundColor: Theme.of(context).primaryColor,
                       ),
                       CircleAvatar(
                         child: CircleAvatar(
@@ -97,7 +92,7 @@ class _PreviewPageState extends State<PreviewPage> {
                             minRadius: 50.0,
                           ),
                         minRadius: 60.0,
-                        backgroundColor: Colors.deepOrange.shade300,
+                        backgroundColor: Theme.of(context).primaryColor,
                       ),
                       CircleAvatar(
                         child: GestureDetector(
@@ -107,7 +102,7 @@ class _PreviewPageState extends State<PreviewPage> {
                           },
                         ),
                         minRadius: 30.0,
-                        backgroundColor: Colors.red.shade600,
+                        backgroundColor: Theme.of(context).primaryColor,
                       ),
 
                     ],
@@ -118,12 +113,12 @@ class _PreviewPageState extends State<PreviewPage> {
               ),
             ),
             ListTile(
-              title: Text("Email", style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),),
+              title: Text("Email", style: TextStyle(color: Theme.of(context).hintColor, fontSize: 12.0),),
               subtitle: Text(_editedContact.email, style: TextStyle(fontSize: 18.0),),
             ),
             Divider(),
             ListTile(
-              title: Text("Telefone", style: TextStyle(color: Colors.deepOrange, fontSize: 12.0),),
+              title: Text("Telefone", style: TextStyle(color: Theme.of(context).hintColor, fontSize: 12.0),),
               subtitle: Text(_editedContact.phone, style: TextStyle(fontSize: 18.0),),
             ),
             Divider(),
