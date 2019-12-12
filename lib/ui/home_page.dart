@@ -5,6 +5,7 @@ import 'package:lista_de_contatos/helpers/contact_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'contact_page.dart';
+import 'preview_page.dart';
 
 enum OrderOptions {orderaz, orderza}
 
@@ -58,8 +59,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.pop(context);
               bottomSheet = false;
             }
-
-            _showContactPage();
+            _newContactPage();
           },
           child: Icon(Icons.add),
           backgroundColor: Colors.red,
@@ -117,22 +117,44 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       onTap: (){
+        _showContactPage(contact: contacts[index]);
+      },
+      onLongPress: (){
         bottomSheet = true;
         _showOptions(context, index);
       },
     );
   }
 
-  void _showContactPage({Contact contact}) async{
+  void _newContactPage() async{
+    final recContact = await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ContactPage(contact: null,))
+    );
+    if(recContact != null){
+      await helper.saveContact(recContact);
+      _getAllContacts();
+    }
+  }
+
+  void _editContact({Contact contact}) async{
+
     final recContact = await Navigator.push(context,
         MaterialPageRoute(builder: (context) => ContactPage(contact: contact,))
     );
     if(recContact != null){
-      if(contact != null){
-        await helper.updateContact(recContact);
-      } else {
-        await helper.saveContact(recContact);
-      }
+      await helper.updateContact(recContact);
+      _getAllContacts();
+    }
+  }
+
+
+  void _showContactPage({Contact contact}) async{
+
+    final recContact = await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => PreviewPage(contact: contact,))
+    );
+    if(recContact != null){
+      await helper.updateContact(recContact);
       _getAllContacts();
     }
   }
@@ -177,7 +199,7 @@ class _HomePageState extends State<HomePage> {
                         onPressed: (){
                           Navigator.pop(context);
                           bottomSheet = false;
-                          _showContactPage(contact: contacts[index]);
+                          _editContact(contact: contacts[index]);
                         },
                       ),
                     ),
